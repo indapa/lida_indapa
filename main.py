@@ -34,12 +34,13 @@ summarization_methods = [
 
 st.write("## Exploratory Data Analysis with LIDA 📊  :bulb:")
 lida=None
+openai_key=st.secrets['openai_key']
 if 'form_one_complete' not in st.session_state:
    st.session_state['form_one_complete'] = False
 
 with st.sidebar:
     
-    
+    #openai_key=st.secrets['openai_key']
     openai_key = st.text_input("Enter OpenAI API key:")    
     
     selected_model = st.selectbox(
