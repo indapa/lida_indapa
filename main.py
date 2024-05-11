@@ -188,7 +188,7 @@ selected_goal_object = goals[selected_goal_index]
 # visualize goal
 if selected_goal_object:
     st.write("## Visualization")
-    st.write(goal_questions.index(selected_goal))    
+    #st.write(goal_questions.index(selected_goal))    
 
     textgen_config = TextGenerationConfig(
                 n=num_visualizations, temperature=temperature,
