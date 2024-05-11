@@ -41,7 +41,7 @@ if 'form_one_complete' not in st.session_state:
 with st.sidebar:
     
     #openai_key=st.secrets['openai_key']
-    openai_key = st.text_input("Enter OpenAI API key:")    
+    #openai_key = st.text_input("Enter OpenAI API key:")    
     
     selected_model = st.selectbox(
             'Choose a model',
@@ -181,7 +181,7 @@ st.write("## Goals")
 selected_goal = st.selectbox('Choose a generated goal', options=goal_questions, index=0)
 selected_goal_index = goal_questions.index(selected_goal)
     
-st.write(goals[selected_goal_index])
+#st.write(goals[selected_goal_index])
         
 selected_goal_object = goals[selected_goal_index]
 
