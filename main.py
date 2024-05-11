@@ -34,7 +34,7 @@ summarization_methods = [
 
 st.write("## Exploratory Data Analysis with LIDA 📊  :bulb:")
 lida=None
-openai_key=st.secrets['openai_key']
+openai_key=st.secrets['OPENAI_API_KEY']
 if 'form_one_complete' not in st.session_state:
    st.session_state['form_one_complete'] = False
 
