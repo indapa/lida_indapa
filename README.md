@@ -6,4 +6,4 @@ The application demonstrates the luse of the [LIDA](https://github.com/microsoft
 
 Currently, I have 3 baked in datasets that you can use to test the application. I am working enabling the user to upload their own dataset and use the application.
 
-I'm really excited about LIDA because in order to do exploratory data analysis, you either needed to have some expertise in manipulating data in  R, Python, or Excel and plotting hit. LIDA allows you to do this without having to write any code. It's a great way to enable non-technical users to do data analysis.
+I'm really excited about LIDA because in order to do exploratory data analysis, you either needed to have some expertise in data manipulation and plotting in R, Python, or Excel. LIDA allows you to do this without having to write any code. It's a great way to enable non-technical users to perform exploratory data analysis.
