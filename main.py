@@ -187,7 +187,7 @@ selected_goal_object = goals[selected_goal_index]
 
 # visualize goal
 if selected_goal_object:
-    st.write("## Visualizations")
+    st.write("## Visualization")
     st.write(goal_questions.index(selected_goal))    
 
     textgen_config = TextGenerationConfig(
@@ -205,9 +205,9 @@ if selected_goal_object:
     #st.write("total visualizations", len(visualizations))   
     viz_titles = [f'Visualization {i+1}' for i in range(len(visualizations))]
 
-    selected_viz_title = st.selectbox('Choose a visualization', options=viz_titles, index=0)
+    #selected_viz_title = st.selectbox('Choose a visualization', options=viz_titles, index=0)
 
-    
+    selected_viz_title='Visualization 1'
     selected_viz = visualizations[viz_titles.index(selected_viz_title)]
 
     if selected_viz.raster:
