@@ -4,7 +4,8 @@ from lida.datamodel import Goal
 import os
 import pandas as pd
 
-
+if 'df' not in st.session_state:
+    st.session_state.df = None  # This would store your dataframe
 
 if 'lida' not in st.session_state:
     st.session_state.lida = None  # This would store your LIDA instance
@@ -14,6 +15,8 @@ if 'summary' not in st.session_state:
 if 'textgen_config' not in st.session_state:
     st.session_state.textgen_config = None  # This would store your LIDA instance
 
+if 'visualizations' not in st.session_state:
+    st.session_state.visualizations = []  # This would store your visualizations
 
 if 'goals' not in st.session_state:
     st.session_state.goals = []  # This would store your goals
@@ -24,6 +27,8 @@ if 'goal_questions' not in st.session_state:
 
 if 'selected_goal' not in st.session_state:
     st.session_state['selected_goal'] = None
+if 'selected_goal_object' not in st.session_state:
+    st.session_state['selected_goal_object'] = None
 
 
 def on_goal_select():
@@ -31,6 +36,7 @@ def on_goal_select():
     st.session_state.selected_goal_index = st.session_state.goal_questions.index(st.session_state.current_goal)
     # This explicitly updates selected_goal based on the new index
     st.session_state.selected_goal = st.session_state.goal_questions[st.session_state.selected_goal_index]
+    st.session_state.selected_goal_object = st.session_state.goals[st.session_state.selected_goal_index]
 
            
 
@@ -100,8 +106,8 @@ if submit_button:
     
     
     #read in the data
-    df = pd.read_csv(uploaded_file)
-    st.write(df.head())
+    st.session_state.df = pd.read_csv(uploaded_file)
+    #st.write(st.session_state.df.head())
     selected_method = summarization_methods[[
         method["label"] for method in summarization_methods].index(selected_method_label)]["label"]
 
@@ -109,7 +115,7 @@ if submit_button:
     #make lida and text config objects and add to session state along with other parameters
     st.session_state.lida = Manager(text_gen=llm("openai", api_key=openai_key))
     st.session_state.textgen_config = TextGenerationConfig(
-            n=1,
+            n=num_visualizations,
             temperature=st.session_state.temp,
             model=st.session_state.model,
             use_cache=st.session_state.use_cache)
@@ -119,7 +125,7 @@ if submit_button:
     #make summary object and add to session state
     # **** lida.summarize *****
     st.session_state.summary = st.session_state.lida.summarize(
-        data=df,
+        data=st.session_state.df,
         summary_method=selected_method,
         textgen_config=st.session_state.textgen_config)
     
@@ -133,6 +139,7 @@ if submit_button:
     st.session_state.goal_questions = [goal.question for goal in st.session_state.goals]
     st.session_state.selected_goal_index = 0
     st.session_state.selected_goal = st.session_state.goal_questions[st.session_state.selected_goal_index]
+    st.session_state.selected_goal_object = st.session_state.goals[st.session_state.selected_goal_index]
 
     #append user goal
     if st.session_state.user_goal is not None:
@@ -140,6 +147,9 @@ if submit_button:
         st.session_state.goals.append(new_goal)
         st.session_state.goal_questions.append(new_goal.question)
 
+if st.session_state.df is not None:
+    st.write("## Data")
+    st.write(st.session_state.df.head())
     
 #display the summary based on session state
 if st.session_state.summary:
@@ -180,5 +190,39 @@ if st.session_state.goals:
         on_change=on_goal_select)
     #st.write(f"Selected goal is: {selected_goal}")
 
-st.write(f"Selected goal index: {st.session_state.selected_goal_index}")
-st.write(f"Selected goal index: {st.session_state.selected_goal}")
+
+
+if st.session_state.summary and st.session_state.selected_goal:
+    #st.write("## Visualization")
+    #st.write(f"Selected goal index: {st.session_state.selected_goal_index}")
+    #st.write(f"Selected goal question: {st.session_state.selected_goal}") 
+    #st.write(f"Selected goal object: {st.session_state.selected_goal_object}")
+    st.session_state.visualizations = st.session_state.lida.visualize(
+        summary=st.session_state.summary,
+        goal=st.session_state.selected_goal_object,
+        textgen_config=st.session_state.textgen_config,
+        library=selected_library)
+    
+    if len(st.session_state.visualizations) == 0:
+        st.info("No visualizations found for the selected goal")
+    else:
+
+        viz_titles = [f'Visualization {i+1}' for i in range(len(st.session_state.visualizations))]
+        
+        #selected_viz_title = st.selectbox('Choose a visualization', options=viz_titles, index=0)
+        selected_viz_title=viz_titles[0]
+        selected_viz=st.session_state.visualizations[viz_titles.index(selected_viz_title)]
+
+        if selected_viz.raster:
+            from PIL import Image
+            import io
+            import base64
+
+            imgdata=base64.b64decode(selected_viz.raster)
+            img = Image.open(io.BytesIO(imgdata))
+            st.image(img, caption=selected_viz_title, use_column_width=True)
+
+            st.write("### Visualization Code")
+            st.code(selected_viz.code)
+
+    
