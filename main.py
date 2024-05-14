@@ -74,8 +74,8 @@ st.markdown("""
 lida=None
 
 openai_key=st.secrets['OPENAI_API_KEY']
-with st.sidebar:
-    st.write("## Submit suggestions or issues")
+
+
 
 with st.sidebar:
     with st.form(key='form_one'):
