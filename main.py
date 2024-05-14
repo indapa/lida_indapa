@@ -48,7 +48,8 @@ st.set_page_config(
     page_title="Exploratory Analysis with LIDA",
     page_icon="📊",
 )
-models = ["gpt-3.5-turbo-16k"]
+models = ["gpt-3.5-turbo-1106"]
+
 
 num_visualizations=1
 selected_library = "seaborn"
@@ -65,7 +66,8 @@ st.write("## Exploratory Data Analysis with LIDA 📊  :bulb:")
 lida=None
 
 openai_key=st.secrets['OPENAI_API_KEY']
-
+with st.sidebar:
+    st.write("## Submit suggestions or issues")
 
 with st.sidebar:
     with st.form(key='form_one'):
