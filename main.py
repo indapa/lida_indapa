@@ -93,8 +93,7 @@ with st.sidebar:
             value=0.0,
             key='temp')
         st.markdown(
-            f"<span> Lower temperature makes goals more focused. Higher temperature makes them more complex. </span>",
-            unsafe_allow_html=True)
+            f"Lower temperature makes goals more focused. Higher temperature makes them more complex.")
         
         num_goals = st.slider(
                 "Number of goals to generate",
