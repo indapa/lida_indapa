@@ -66,8 +66,7 @@ st.write("## Exploratory Data Analysis with LIDA 📊  :bulb:")
 lida=None
 
 openai_key=st.secrets['OPENAI_API_KEY']
-with st.sidebar:
-    st.write("## Submit suggestions or issues")
+
 
 with st.sidebar:
     with st.form(key='form_one'):
@@ -84,6 +83,9 @@ with st.sidebar:
             max_value=1.0,
             value=0.0,
             key='temp')
+        st.markdown(
+            f"<span> Lower temperature makes goals more focused. Higher temperature makes them more complex. </span>",
+            unsafe_allow_html=True)
         
         num_goals = st.slider(
                 "Number of goals to generate",
