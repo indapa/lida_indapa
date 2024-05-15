@@ -62,10 +62,19 @@ summarization_methods = [
 
      ]
 
-st.write("## Exploratory Data Analysis with LIDA 📊  :bulb:")
+st.write("## Exploratory Data Analysis with LIDA 📊  :bulb: :computer:")
+st.markdown("""
+            Automatic generation of goals and visualizations for your data
+            
+            * [LIDA Homepage](https://github.com/microsoft/lida)
+            * [LIDA GitHub](https://github.com/lida-project)
+            * [indapa-lida Streamlit app GitHub](https://github.com/indapa/lida_indapa/)
+            * [Demo screencast of this app](https://youtu.be/Ml74vZONdEI)
+            """)
 lida=None
 
 openai_key=st.secrets['OPENAI_API_KEY']
+
 
 
 with st.sidebar:
