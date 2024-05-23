@@ -31,6 +31,10 @@ if 'selected_goal_object' not in st.session_state:
     st.session_state['selected_goal_object'] = None
 
 
+
+
+
+
 def on_goal_select():
     # Update the index based on the new selection in the dropdown
     st.session_state.selected_goal_index = st.session_state.goal_questions.index(st.session_state.current_goal)
@@ -106,6 +110,11 @@ with st.sidebar:
     
         user_goal = st.text_input("Describe Your Goal:", key='user_goal')
 
+        persona=st.text_input("Persona", key='persona', value="A data scientist")
+        st.markdown(
+            f"Persona is the role or identity that can help generate goals relevant to the target audience. For example, the application defaults to a 'A data scientist'")
+            
+
         use_cache = st.checkbox("Use cache", value=True, key='use_cache')
         
         
@@ -147,7 +156,10 @@ if submit_button:
     
 
     # make lida goals and add to session state
-    st.session_state.goals = st.session_state.lida.goals(st.session_state.summary, n=num_goals, textgen_config=st.session_state.textgen_config)
+    st.session_state.goals = st.session_state.lida.goals(st.session_state.summary,
+                                                          n=num_goals, 
+                                                          persona=st.session_state.persona,
+                                                          textgen_config=st.session_state.textgen_config)
     st.session_state.goal_questions = [goal.question for goal in st.session_state.goals]
     st.session_state.selected_goal_index = 0
     st.session_state.selected_goal = st.session_state.goal_questions[st.session_state.selected_goal_index]
