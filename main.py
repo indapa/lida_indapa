@@ -67,14 +67,31 @@ summarization_methods = [
      ]
 
 st.write("## Exploratory Data Analysis with LIDA 📊  :bulb: :computer:")
-st.markdown("""
+intro_text="""
             Automatic generation of goals and visualizations for your data
             
             * [LIDA Homepage](https://github.com/microsoft/lida)
             * [LIDA GitHub](https://github.com/lida-project)
             * [indapa-lida Streamlit app GitHub](https://github.com/indapa/lida_indapa/)
             * [Demo screencast of this app](https://youtu.be/Ml74vZONdEI)
-            """)
+
+
+            ### Tips for using your own data
+
+            
+            - Ensure your data is tidy (one variable per column, one observation per row)
+            - Ensure your data has a header row with column names
+            - Ensure your data is in a CSV format
+
+           The paper [Data organization in spreadsheets](https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989) provides a good overview of tidy data principles.
+
+           
+           ### Questions or feedback? 
+           
+           Open an issue on [Github](https://github.com/indapa/lida_indapa/issues)
+
+            """
+st.write(intro_text)
 lida=None
 
 openai_key=st.secrets['OPENAI_API_KEY']
