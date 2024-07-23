@@ -52,7 +52,7 @@ st.set_page_config(
     page_title="Exploratory Analysis with LIDA",
     page_icon="📊",
 )
-models = ["gpt-3.5-turbo-1106"]
+models=['gpt-4o-mini']
 
 
 num_visualizations=1
